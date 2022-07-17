@@ -22,14 +22,12 @@ export class ProjectsService {
     }
 
     async find_or_create ( create_project_dto: Omit<Project, 'id' | 'todos'> ): Promise<Project> {
-        return this.projects_repository.createQueryBuilder()
-            .insert()
-            .values( create_project_dto )
-            .orIgnore()
-            .select( '*' )
-            .where( create_project_dto )
-            .execute()
-            .then( ( val ) => val[0] );
+        return await this.projects_repository.findOneBy( create_project_dto ).then( async ( val ) => {
+            if ( val == null ) {
+                return this.save_project( create_project_dto );
+            }
+            return val;
+        } );
     }
 
     /**
@@ -40,12 +38,7 @@ export class ProjectsService {
      * @memberof ProjectsService
      */
     async seed_project ( seed_projct_dto: Omit<Project, 'id' | 'todos'> ): Promise<Project> {
-        return await this.projects_repository.findOneBy( seed_projct_dto ).then( async ( val ) => {
-            if ( val == null ) {
-                return this.save_project( seed_projct_dto );
-            }
-            return val;
-        } );
+        return this.find_or_create( seed_projct_dto );
     }
 
 
