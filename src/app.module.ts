@@ -22,9 +22,9 @@ import { TodosModule } from './todos/todos.module';
             synchronize: true,
             autoLoadEntities: true,
             ssl: process.env.POSTGRES_USE_SSL !== undefined,
-            extra: {
+            extra: process.env.POSTGRES_USE_SSL === undefined ? undefined : {
                 ssl: {
-                    rejectUnauthorized: process.env.POSTGRES_USE_SSL !== undefined,
+                    rejectUnauthorized: false,
                 },
             },
         } ),
