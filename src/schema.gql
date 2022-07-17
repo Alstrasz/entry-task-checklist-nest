@@ -1,0 +1,35 @@
+# ------------------------------------------------------
+# THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
+# ------------------------------------------------------
+
+type Todo {
+  id: Int!
+  text: String!
+  isCompleted: Boolean!
+}
+
+type Project {
+  id: Int!
+  title: String!
+  todos: [Todo!]!
+}
+
+type Query {
+  project(id: Int!): Project!
+  all_projects: [Project!]!
+}
+
+type Mutation {
+  create_todo(create_todo_dto: CreateTodoDto!): Project!
+  set_completed(set_completed_dto: SetCompletedDto!): Todo!
+}
+
+input CreateTodoDto {
+  title: String!
+  text: String!
+}
+
+input SetCompletedDto {
+  id: Int!
+  new_value: Boolean!
+}
