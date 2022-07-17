@@ -22,6 +22,11 @@ import { TodosModule } from './todos/todos.module';
             synchronize: true,
             autoLoadEntities: true,
             ssl: process.env.POSTGRES_USE_SSL !== undefined,
+            extra: {
+                ssl: {
+                    rejectUnauthorized: process.env.POSTGRES_USE_SSL !== undefined,
+                },
+            },
         } ),
         GraphQLModule.forRoot<ApolloDriverConfig>( {
             driver: ApolloDriver,
